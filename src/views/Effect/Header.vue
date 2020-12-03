@@ -1,7 +1,9 @@
 <template>
-  <h1>EffectHeader</h1>
-  <hr />
-  <router-view />
+  <div>
+    <h1>EffectHeader</h1>
+    <hr />
+    <router-view />
+  </div>
 </template>
 
 <script>
