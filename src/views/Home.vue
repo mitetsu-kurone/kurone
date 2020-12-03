@@ -1,18 +1,67 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="home-title">mitetsu kurone's show area</div>
+
+    <div class="log-area">
+      <div class="log-title">
+        update history
+      </div>
+      <div
+        class="log-content"
+        v-for="(data, index) in log"
+        :key="'log-' + index"
+      >
+        <div class="date">{{ data.date }}</div>
+        <div class="content">{{ data.content }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  data() {
+    return {
+      log: [
+        {
+          date: "2020-10-26",
+          content: "build project and test push"
+        },
+        {
+          date: "2020-11-22",
+          content: "first design and add log page"
+        }
+      ]
+    };
   }
 };
 </script>
+<style scoped lang="scss">
+.home-title {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.log-area {
+  width: 70%;
+  margin: 0 auto;
+  .log-title {
+    border: 1px solid red;
+  }
+  .log-content {
+    border: 1px solid red;
+    display: flex;
+    .date {
+      border: 1px solid purple;
+      width: 200px;
+    }
+    .content {
+      flex: 1 0 auto;
+      border: 1px solid purple;
+    }
+  }
+}
+</style>

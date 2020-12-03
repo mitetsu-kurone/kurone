@@ -2,8 +2,8 @@
   <!-- <div class="header">
     header
   </div> -->
-  <Header class="header" />
-  <div class="content">
+  <Header class="outer-header" />
+  <div class="outer-content">
     <!-- <div class="side">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -33,24 +33,26 @@ body {
   overscroll-behavior-y: none;
   margin: 0px;
   padding: 0px;
+  background: black;
+  color: white;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  //color: #2c3e50;
   width: 1280px;
   height: calc(100vh - 20px);
-  border: 1px solid cyan;
+  //border: 1px solid cyan;
   margin: 10px auto;
 }
 
-.header {
+.outer-header {
   border: 1px solid red;
   height: 50px;
 }
-.content {
+.outer-content {
   display: flex;
   height: calc(100vh - 70px);
   .side {
