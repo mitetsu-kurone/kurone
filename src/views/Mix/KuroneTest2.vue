@@ -1,37 +1,29 @@
 <template>
   <div class="kurone-test">
     <h1>This is an about kurone vue3 test2</h1>
-    all:{{ count }}<br />
-    counter kurone: {{ count.kurone }}<br />
-    counter default: {{ count.default }}
+    testFirst:{{ testFirst }}<br />
+    testAll:{{ testAll }}<br />
     <hr />
-    <div @click="plusFunc(1)">[plus kurone]</div>
-    <div @click="plusFunc(2)">[plus default]</div>
+    <div @click="plusFunc(1)">+1</div>
+    <div @click="plusFunc(9)">+9</div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
       count: {}
     };
   },
+  computed: {
+    ...mapGetters(["testFirst", "testAll"])
+  },
   methods: {
+    ...mapActions(["kuroneSlash"]),
     plusFunc(val) {
-      if (val === 1) {
-        if (this.count.kurone) {
-          this.count.kurone += 1;
-        } else {
-          this.count.kurone = 1;
-        }
-      } else {
-        if (this.count.default) {
-          this.count.default += 1;
-        } else {
-          this.count.default = 1;
-        }
-      }
+      this.kuroneSlash(val);
     }
   }
 };

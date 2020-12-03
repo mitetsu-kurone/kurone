@@ -33,6 +33,10 @@ export default {
         {
           date: "2020-11-22",
           content: "first design and add log page"
+        },
+        {
+          date: "2020-12-03",
+          content: "vuex build and update package"
         }
       ]
     };

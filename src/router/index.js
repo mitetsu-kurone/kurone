@@ -18,14 +18,10 @@ const routes = [
   },
   {
     path: "/mix",
+    redirect: "/mix/todoList",
     component: () =>
       import(/* webpackChunkName: "mix" */ "../views/Mix/Header"),
     children: [
-      {
-        path: "/",
-        // 先寫死
-        redirect: "todoList"
-      },
       {
         path: "todoList",
         name: "todoList",
@@ -50,14 +46,10 @@ const routes = [
   },
   {
     path: "/effect",
+    redirect: "/effect/fakeTransition",
     component: () =>
       import(/* webpackChunkName: "effect" */ "../views/Effect/Header"),
     children: [
-      {
-        path: "/",
-        // 先寫死
-        redirect: "todoList"
-      },
       {
         path: "fakeTransition",
         name: "fakeTransition",
@@ -69,6 +61,13 @@ const routes = [
         component: () => import("@/views/Effect/ScrollShadow")
       }
     ]
+  },
+  {
+    path: "/:any(.*)*",
+    name: "nomatch",
+    beforeEnter: (to, from, next) => {
+      next("/");
+    }
   }
   // {
   //   path: "/test",
