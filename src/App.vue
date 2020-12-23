@@ -49,7 +49,7 @@ body {
 }
 
 .outer-header {
-  border: 1px solid red;
+  //border: 1px solid red;
   height: 50px;
 }
 .outer-content {
@@ -57,11 +57,11 @@ body {
   height: calc(100vh - 70px);
   .side {
     width: 280px;
-    border: 1px solid blue;
+    //border: 1px solid blue;
   }
   .inner {
     width: 1000px;
-    border: 1px solid green;
+    //border: 1px solid green;
   }
 }
 </style>

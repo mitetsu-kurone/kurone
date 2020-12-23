@@ -38,6 +38,8 @@ export default {
   cursor: pointer;
 
   .router {
+    height: 35px;
+    line-height: 35px;
     text-decoration: none;
     border: 1px solid purple;
     color: cyan;
@@ -53,6 +55,7 @@ export default {
   .group {
     display: flex;
     flex-direction: column;
+    border: 1px solid blue;
     .group-title {
       color: cyan;
       font-weight: bold;
@@ -64,9 +67,11 @@ export default {
         background: radial-gradient(ellipse at center, purple, #c462c4);
       }
     }
-    .router:hover {
-      border: 1px solid purple;
-      background: radial-gradient(ellipse at center, rgb(128, 0, 0), #c462c4);
+    .router {
+      &:hover {
+        border: 1px solid purple;
+        background: radial-gradient(ellipse at center, rgb(128, 0, 0), #c462c4);
+      }
     }
   }
 }
