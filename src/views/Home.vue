@@ -10,7 +10,10 @@
       這裡不存在會動又會講話的3D模組，也不會有日文語音，只有象徵性頭圖和設定<br />
       只會整理存放和改造自己有興趣的各種素材<br />
       特效怎麼做的自己直接整份co回家看研究比較快，原始碼都公開的<br />
-      所有特效素材均取自網路，無營利行為<br />
+      轉貼自由只是更新時間未定，不保證下一次什麼時候更新，也不保證初版什麼時候完成<br />
+      基本禮貌原則也不用提了，會遵守就會遵守，是引用別人就說引用，沒什麼大不了的<br />
+      硬要抄了又說是自創我當然沒辦法阻止你，但commit時間擺在那<br />
+      所有素材均取自網路，無營利行為<br />
     </div>
     <div class="log-area">
       <div class="log-title">
@@ -37,16 +40,12 @@ export default {
     return {
       log: [
         {
-          date: "2020-12-03",
-          content: "vuex build and update package"
-        },
-        {
-          date: "2020-11-22",
-          content: "first design and add log page"
+          date: "2021-2-24",
+          content: "mix todolist完成"
         },
         {
           date: "2020-10-26",
-          content: "build project and test push"
+          content: "紀錄一個開始的時間"
         }
       ]
     };
