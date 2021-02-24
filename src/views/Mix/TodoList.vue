@@ -1,12 +1,17 @@
 <template>
   <div>
     <h1>This is TodoList page</h1>
-    {{ startPos }}{{ listStyleOrigin }} {{ listStyleEnd }}
-    <hr />
-    movingIndex: {{ movingIndex }} mode: {{ mode }}
-    {{ todoList }}
-    <hr />
+    <div v-if="showDataWork">
+      {{ startPos }}{{ listStyleOrigin }} {{ listStyleEnd }}
+      <hr />
+      movingIndex: {{ movingIndex }} mode: {{ mode }}
+      {{ todoList }}
+      <hr />
+    </div>
     <!-- <span class="mode-status">Status: {{ mode }} Mode</span> -->
+    <span class="top-button add" @click="showDataWork = !showDataWork"
+      >Data Work</span
+    >
     <span class="top-button add" @click="addTable()">Add Table</span>
     <span class="top-button add" @click="addCard()">Add Card</span>
     <span
@@ -78,6 +83,9 @@
             class="list move-mode"
             :ref="'mainlist_' + index"
             draggable="true"
+            @touchstart.prevent="event => touchStart(event, index)"
+            @touchmove.prevent="touchMove"
+            @touchend.prevent="moveEnd"
             @dragStart="event => moveStart(event, index)"
             @drag="newMove"
             @dragEnd="moveEnd"
@@ -200,6 +208,7 @@ export default {
   mounted() {},
   data() {
     return {
+      showDataWork: false,
       mode: "move",
       movingIndex: null,
       nowTable: 0,
@@ -330,8 +339,8 @@ export default {
     },
     switchStatus(cardIndex, taskIndex) {
       const statusTran = {
-        none: "work",
-        work: "fail",
+        none: "done",
+        done: "fail",
         fail: "none"
       };
       const target = this.todoList[this.nowTable].card[cardIndex].content[
@@ -368,8 +377,16 @@ export default {
     changeMode(mode) {
       this.mode = mode;
     },
+    touchStart(event, index = null) {
+      this.moveStart(event.touches[0], index);
+    },
+    touchMove: _.throttle(
+      function(event) {
+        this.moveList(event.touches[0]);
+      },
+      150 // time
+    ),
     moveStart(event, index = null) {
-      //console.log("start", event.clientX, index);
       if (index !== null) {
         this.listStyleOrigin = {
           ...this.todoList[this.nowTable].card[index].pos
