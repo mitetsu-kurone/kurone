@@ -2,25 +2,42 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "Home",
+  //   component: Home
+  // },
+  // {
+  //   path: "/profile",
+  //   name: "profile",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () =>
+  //     import(/* webpackChunkName: "profile" */ "../views/Profile.vue")
+  // },
   {
     path: "/",
     name: "Home",
-    component: Home
-  },
-  {
-    path: "/profile",
-    name: "profile",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "profile" */ "../views/Profile.vue")
+    component: () => import("../views/ContentView"),
+    children: [
+      {
+        path: "/profile",
+        name: "profile",
+        component: () =>
+          import(/* webpackChunkName: "profile" */ "../views/Profile.vue")
+      },
+      {
+        path: "/",
+        name: "homepage",
+        component: Home
+      }
+    ]
   },
   {
     path: "/mix",
     redirect: "/mix/todoList",
-    component: () =>
-      import(/* webpackChunkName: "mix" */ "../views/Mix/Header"),
+    component: () => import("../views/ContentView"),
     children: [
       {
         path: "todoList",
@@ -47,8 +64,7 @@ const routes = [
   {
     path: "/effect",
     redirect: "/effect/fakeTransition",
-    component: () =>
-      import(/* webpackChunkName: "effect" */ "../views/Effect/Header"),
+    component: () => import("../views/ContentView"),
     children: [
       {
         path: "fakeTransition",

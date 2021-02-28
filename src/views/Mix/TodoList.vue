@@ -1,49 +1,51 @@
 <template>
   <div>
-    <h1>This is TodoList page</h1>
+    <!-- <h1>This is TodoList page</h1> -->
     <div v-if="showDataWork">
-      {{ startPos }}{{ listStyleOrigin }} {{ listStyleEnd }}
+      mode: {{ mode }},movingIndex: {{ movingIndex }},startPos:{{
+        startPos
+      }},movingPos:{{ movingPos }},
       <hr />
-      movingIndex: {{ movingIndex }} mode: {{ mode }}
       {{ todoList }}
       <hr />
     </div>
-    <!-- <span class="mode-status">Status: {{ mode }} Mode</span> -->
-    <span class="top-button add" @click="showDataWork = !showDataWork"
-      >Data Work</span
-    >
-    <span class="top-button add" @click="addTable()">Add Table</span>
-    <span class="top-button add" @click="addCard()">Add Card</span>
-    <span
-      class="top-button"
-      :class="{ current: mode === 'move' }"
-      @click="changeMode('move')"
-      >Move Card</span
-    >
-    <span
-      class="top-button"
-      :class="{ current: mode === 'movetask' }"
-      @click="changeMode('movetask')"
-      >Move Task</span
-    >
-    <span
-      class="top-button"
-      :class="{ current: mode === 'edit' }"
-      @click="changeMode('edit')"
-      >Edit mode</span
-    >
-    <span
-      class="top-button"
-      :class="{ current: mode === 'work' }"
-      @click="changeMode('work')"
-      >Work mode</span
-    >
-    <span
-      class="top-button"
-      :class="{ current: mode === 'delete' }"
-      @click="changeMode('delete')"
-      >Delete mode</span
-    >
+    <div class="top-button-bar">
+      <span class="top-button add" @click="showDataWork = !showDataWork"
+        >Data Work</span
+      >
+      <span class="top-button add" @click="addTable()">Add Table</span>
+      <span class="top-button add" @click="addCard()">Add Card</span>
+      <span
+        class="top-button"
+        :class="{ current: mode === 'move' }"
+        @click="changeMode('move')"
+        >Move Card</span
+      >
+      <span
+        class="top-button"
+        :class="{ current: mode === 'movetask' }"
+        @click="changeMode('movetask')"
+        >Move Task</span
+      >
+      <span
+        class="top-button"
+        :class="{ current: mode === 'edit' }"
+        @click="changeMode('edit')"
+        >Edit mode</span
+      >
+      <span
+        class="top-button"
+        :class="{ current: mode === 'work' }"
+        @click="changeMode('work')"
+        >Work mode</span
+      >
+      <span
+        class="top-button"
+        :class="{ current: mode === 'delete' }"
+        @click="changeMode('delete')"
+        >Delete mode</span
+      >
+    </div>
     <div class="todolist">
       <div class="table-tab">
         <div v-for="(table, index) in todoList" :key="index">
@@ -65,7 +67,7 @@
           <!-- <div v-else>{{ listContent.name }}</div> -->
           <div
             v-else
-            @click="nowTable = index"
+            @click="actionSetTable(index)"
             class="table-child"
             :class="{ current: nowTable === index }"
           >
@@ -74,124 +76,122 @@
         </div>
       </div>
       <div class="list-outer" ref="listouter">
-        <template
-          v-for="(listContent, index) in todoList[nowTable].card"
-          :key="'card_' + listContent.id"
-        >
+        <transition-group name="anime-card" tag="div">
           <div
-            v-if="mode === 'move'"
-            class="list move-mode"
-            :ref="'mainlist_' + index"
-            draggable="true"
-            @touchstart.prevent="event => touchStart(event, index)"
-            @touchmove.prevent="touchMove"
-            @touchend.prevent="moveEnd"
-            @dragStart="event => moveStart(event, index)"
-            @drag="newMove"
-            @dragEnd="moveEnd"
-            @dragover.prevent
-            :style="
-              tranPos(index === movingIndex ? listStyleOrigin : listContent.pos)
-            "
-          ></div>
-          <div
-            v-if="mode === 'move'"
-            class="true-list-line"
-            :style="
-              tranPos(index === movingIndex ? listStyleOrigin : listContent.pos)
-            "
-          ></div>
-          <div
-            class="true-list-board"
-            :class="{ move: mode === 'move' }"
-            :style="tranPos(listContent.pos)"
+            v-for="(listContent, index) in todoList[nowTable].card"
+            :key="'card_' + listContent.id"
           >
-            <div class="card-title">
-              <div v-if="mode === 'edit'">
-                <input type="text" v-model="listContent.name" />
-              </div>
-              <div
-                v-else-if="mode === 'delete'"
-                class="delete-btn"
-                @click="deleteCard(index)"
-              >
-                {{ listContent.name }}
-              </div>
-              <div v-else>{{ listContent.name }}</div>
-            </div>
-            <div class="card-content" :class="{ fixHeight: mode === 'edit' }">
-              <draggable
-                v-if="mode === 'movetask'"
-                v-model="listContent.content"
-                group="listContent"
-                item-key="id"
-              >
-                <template #item="{element}">
-                  <div class="move-mode">
-                    <div :class="element.status">
-                      {{ element.text }}
-                    </div>
-                  </div>
-                </template>
-              </draggable>
-              <div v-if="mode === 'edit'" class="edit-mode">
-                <transition-group name="anime-card" tag="div">
-                  <div
-                    v-for="(ele, indexContent) in listContent.content"
-                    :key="indexContent"
-                    :class="ele.status"
-                  >
-                    <input type="text" v-model="ele.text" />
-                  </div>
-                  <!-- <div
-                    class="add-task"
-                    :key="'add-task-' + index"
-                    @click="addTask(index)"
-                  >
-                    Add Task
-                  </div> -->
-                </transition-group>
-              </div>
-              <div v-if="mode === 'work' || mode === 'move'" class="work-mode">
-                <div
-                  v-for="(ele, indexContent) in listContent.content"
-                  :key="indexContent"
-                >
-                  <div
-                    :class="ele.status"
-                    @click="switchStatus(index, indexContent)"
-                  >
-                    {{ ele.text }}
-                  </div>
+            <div
+              v-if="mode === 'move'"
+              class="list move-mode"
+              :ref="'mainlist_' + index"
+              draggable="true"
+              @touchstart.prevent="event => touchStart(event, index)"
+              @touchmove.prevent="touchMove"
+              @touchend.prevent="moveEnd"
+              @dragstart="event => moveStart(event, index)"
+              @drag="newMove"
+              @dragend="moveEnd"
+              @dragover.prevent
+              :style="
+                tranPos(index === movingIndex ? movingPos : listContent.pos)
+              "
+            ></div>
+            <div
+              v-if="mode === 'move'"
+              class="true-list-line"
+              :style="
+                tranPos(index === movingIndex ? movingPos : listContent.pos)
+              "
+            ></div>
+            <div
+              class="true-list-board"
+              :class="{ move: mode === 'move' }"
+              :style="tranPos(listContent.pos)"
+            >
+              <div class="card-title">
+                <div v-if="mode === 'edit'">
+                  <input type="text" v-model="listContent.name" />
                 </div>
+                <div
+                  v-else-if="mode === 'delete'"
+                  class="delete-btn"
+                  @click="deleteCard(index)"
+                >
+                  {{ listContent.name }}
+                </div>
+                <div v-else>{{ listContent.name }}</div>
               </div>
-
-              <div v-if="mode === 'delete'" class="delete-mode">
-                <transition-group name="anime-card" tag="div">
+              <div class="card-content" :class="{ fixHeight: mode === 'edit' }">
+                <draggable
+                  v-if="mode === 'movetask'"
+                  v-model="listContent.content"
+                  group="listContent"
+                  item-key="id"
+                >
+                  <template #item="{element}">
+                    <div class="move-mode">
+                      <div :class="element.status">
+                        {{ element.text }}
+                      </div>
+                    </div>
+                  </template>
+                </draggable>
+                <div v-if="mode === 'edit'" class="edit-mode">
+                  <transition-group name="anime-card" tag="div">
+                    <div
+                      v-for="ele in listContent.content"
+                      :key="ele.id"
+                      :class="ele.status"
+                    >
+                      <input type="text" v-model="ele.text" />
+                    </div>
+                  </transition-group>
+                </div>
+                <div
+                  v-if="mode === 'work' || mode === 'move'"
+                  class="work-mode"
+                >
                   <div
                     v-for="(ele, indexContent) in listContent.content"
                     :key="ele.id"
                   >
                     <div
                       :class="ele.status"
-                      @click="deleteTask(index, indexContent)"
+                      @click="switchStatus(index, indexContent)"
                     >
                       {{ ele.text }}
                     </div>
                   </div>
-                </transition-group>
+                </div>
+
+                <div v-if="mode === 'delete'" class="delete-mode">
+                  <transition-group name="anime-card" tag="div">
+                    <div
+                      v-for="(ele, indexContent) in listContent.content"
+                      :key="ele.id"
+                    >
+                      <div
+                        :class="ele.status"
+                        @click="deleteTask(index, indexContent)"
+                      >
+                        {{ ele.text }}
+                      </div>
+                    </div>
+                  </transition-group>
+                </div>
+              </div>
+              <div
+                class="add-task"
+                :key="'add-task-' + index"
+                v-if="mode === 'edit'"
+                @click="addTask(index)"
+              >
+                Add Task
               </div>
             </div>
-            <div
-              class="add-task"
-              :key="'add-task-' + index"
-              v-if="mode === 'edit'"
-              @click="addTask(index)"
-            >
-              Add Task
-            </div>
           </div>
-        </template>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -199,6 +199,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { mapActions, mapGetters } from "vuex";
 import _ from "lodash";
 
 export default {
@@ -211,131 +212,137 @@ export default {
       showDataWork: false,
       mode: "move",
       movingIndex: null,
-      nowTable: 0,
-      nextCardIndex: 4,
-      nextTaskIndex: 12,
-      todoList: [
-        {
-          title: "work1",
-          card: [
-            {
-              name: "card1",
-              id: 0,
-              pos: {
-                top: 24,
-                left: 208
-              },
-              content: [
-                { text: "taska1", id: 0, status: "none" },
-                { text: "taska2", id: 1, status: "fail" },
-                { text: "taska3", id: 2, status: "done" }
-              ]
-            },
-            {
-              name: "card2",
-              id: 1,
-              pos: {
-                top: 79,
-                left: 587
-              },
-              content: [
-                { text: "taskb1", id: 3, status: "done" },
-                { text: "taskb2", id: 4, status: "fail" },
-                { text: "taskb3", id: 5, status: "none" }
-              ]
-            }
-          ]
-        },
-        {
-          title: "work2",
-          card: [
-            {
-              name: "card99",
-              id: 2,
-              pos: {
-                top: 240,
-                left: 96
-              },
-              content: [
-                { text: "task91", id: 6, status: "none" },
-                { text: "task02", id: 7, status: "none" },
-                { text: "task993", id: 8, status: "fail" }
-              ]
-            },
-            {
-              name: "card992",
-              id: 3,
-              pos: {
-                top: 177,
-                left: 570
-              },
-              content: [
-                { text: "taskb01", id: 9, status: "done" },
-                { text: "taskb02", id: 10, status: "done" },
-                { text: "task9b3", id: 11, status: "done" }
-              ]
-            }
-          ]
-        }
-      ],
+      // nowTable: 0,
+      // nextCardIndex: 4,
+      // nextTaskIndex: 13,
+      // todoList: [
+      //   {
+      //     title: "testPlugin",
+      //     card: [
+      //       {
+      //         name: "testDrag",
+      //         id: 0,
+      //         pos: {
+      //           top: 24,
+      //           left: 208
+      //         },
+      //         content: [
+      //           { text: "vueresize", id: 0, status: "fail" },
+      //           { text: "vue3resize", id: 0, status: "none" },
+      //           { text: "vue3FullDrag", id: 1, status: "fail" },
+      //           { text: "vuedraggable", id: 2, status: "done" }
+      //         ]
+      //       },
+      //       {
+      //         name: "testMess",
+      //         id: 1,
+      //         pos: {
+      //           top: 79,
+      //           left: 587
+      //         },
+      //         content: [
+      //           { text: "lodash", id: 3, status: "done" },
+      //           { text: "vuex", id: 4, status: "done" },
+      //           { text: "vuewaypoint", id: 5, status: "none" }
+      //         ]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     title: "plan",
+      //     card: [
+      //       {
+      //         name: "glitch",
+      //         id: 2,
+      //         pos: {
+      //           top: 240,
+      //           left: 96
+      //         },
+      //         content: [
+      //           { text: "filter1", id: 6, status: "done" },
+      //           { text: "filter2", id: 7, status: "none" },
+      //           { text: "css1", id: 8, status: "fail" },
+      //           { text: "css2", id: 9, status: "none" }
+      //         ]
+      //       },
+      //       {
+      //         name: "trick",
+      //         id: 3,
+      //         pos: {
+      //           top: 177,
+      //           left: 570
+      //         },
+      //         content: [
+      //           { text: "shadowScroll", id: 10, status: "none" },
+      //           { text: "rgbDisplay", id: 11, status: "none" },
+      //           { text: "moveDisplay", id: 12, status: "none" }
+      //         ]
+      //       }
+      //     ]
+      //   }
+      // ],
       dragging: false,
-      listStyleOrigin2: {
-        top: 60,
-        left: 60
-      },
       startPos: {
         top: 0,
         left: 0
       },
-      listStyleOrigin: {
-        top: 0,
-        left: 0
-      },
-      listStyleEnd: {
+      movingPos: {
         top: 0,
         left: 0
       }
     };
   },
   computed: {
-    //...mapGetters(["testFirst", "testAll"])
+    ...mapGetters({
+      todoList: "getTodoList",
+      nowTable: "getNowTable"
+    })
   },
   methods: {
-    //...mapActions(["kuroneSlash"]),
+    ...mapActions([
+      "actionAddTable",
+      "actionAddCard",
+      "actionAddTask",
+      "actionDeleteTable",
+      "actionSetTable"
+    ]),
+    // 能直接更動的就先不弄action
     addTable() {
-      const taskCount = this.todoList.length;
-      this.todoList.push({
-        title: "work" + (taskCount + 1),
-        card: []
-      });
-      this.nowTable = taskCount;
-      this.addCard();
+      this.actionAddTable();
+      // const taskCount = this.todoList.length;
+      // this.todoList.push({
+      //   title: "work" + (taskCount + 1),
+      //   card: []
+      // });
+      // this.nowTable = taskCount;
+      // this.addCard();
     },
     addCard() {
-      const id = this.nextCardIndex;
-      const cardCount = this.todoList[this.nowTable].card.length;
-      this.todoList[this.nowTable].card.push({
-        name: "card" + (cardCount + 1),
-        id,
-        pos: {
-          top: 0,
-          left: 0
-        },
-        content: []
-      });
-      this.addTask(cardCount);
-      this.nextCardIndex += 1;
+      this.actionAddCard();
+      // const id = this.nextCardIndex;
+      // const cardCount = this.todoList[this.nowTable].card.length;
+      // this.todoList[this.nowTable].card.push({
+      //   name: "card" + (cardCount + 1),
+      //   id,
+      //   pos: {
+      //     top: 0,
+      //     left: 0
+      //   },
+      //   content: []
+      // });
+      // this.addTask(cardCount);
+      // this.nextCardIndex += 1;
     },
     addTask(index) {
-      const id = this.nextTaskIndex;
-      //console.log(index, this.todoList[this.nowTable].card[index].content);
-      const leng = this.todoList[this.nowTable].card[index].content.length + 1;
-      this.todoList[this.nowTable].card[index].content.push({
-        text: "new task" + leng,
-        id,
-        status: "none"
-      });
-      this.nextTaskIndex += 1;
+      this.actionAddTask(index);
+      // const id = this.nextTaskIndex;
+      // const leng = this.todoList[this.nowTable].card[index].content.length + 1;
+      // this.todoList[this.nowTable].card[index].content.push({
+      //   text: "new task" + leng,
+      //   id,
+      //   status: "none"
+      // });
+      // this.nextTaskIndex += 1;
     },
     switchStatus(cardIndex, taskIndex) {
       const statusTran = {
@@ -365,8 +372,9 @@ export default {
         alert("只剩下一個工作表不可刪除");
         return;
       }
-      this.todoList.splice(tableIndex, 1);
-      this.nowTable = 0;
+      this.actionDeleteTable(tableIndex);
+      // this.todoList.splice(tableIndex, 1);
+      // this.nowTable = 0;
     },
     tranPos(source) {
       return {
@@ -388,7 +396,7 @@ export default {
     ),
     moveStart(event, index = null) {
       if (index !== null) {
-        this.listStyleOrigin = {
+        this.movingPos = {
           ...this.todoList[this.nowTable].card[index].pos
         };
         this.movingIndex = index;
@@ -406,14 +414,6 @@ export default {
       },
       150 // time
     ),
-    // newMove2(event) {
-    //   console.log("newmoove");
-    //   const vm = this;
-    //   _.throttle(() => {
-    //     console.log("test2");
-    //     vm.moveList(event);
-    //   }, 500);
-    // },
     moveList(event) {
       if (this.dragging === false) {
         return;
@@ -426,35 +426,33 @@ export default {
       let { clientHeight: innerHeight, clientWidth: innerWidth } = this.$refs[
         "mainlist_" + this.movingIndex
       ];
-      const testTop =
-        this.listStyleOrigin.top + event.clientY - this.startPos.top;
+      const testTop = this.movingPos.top + event.clientY - this.startPos.top;
 
       if (testTop >= 0 && testTop < outerHeight - innerHeight) {
-        this.listStyleOrigin.top = testTop;
+        this.movingPos.top = testTop;
       }
       if (testTop < 0) {
-        this.listStyleOrigin.top = 0;
+        this.movingPos.top = 0;
       }
       if (testTop > outerHeight - innerHeight) {
-        this.listStyleOrigin.top = outerHeight - innerHeight;
+        this.movingPos.top = outerHeight - innerHeight;
       }
-      const testLeft =
-        this.listStyleOrigin.left + event.clientX - this.startPos.left;
+      const testLeft = this.movingPos.left + event.clientX - this.startPos.left;
       if (testLeft >= 0 && testLeft < outerWidth - innerWidth) {
-        this.listStyleOrigin.left = testLeft;
+        this.movingPos.left = testLeft;
       }
       if (testLeft < 0) {
-        this.listStyleOrigin.left = 0;
+        this.movingPos.left = 0;
       }
       if (testLeft > outerWidth - innerWidth) {
-        this.listStyleOrigin.left = outerWidth - innerWidth;
+        this.movingPos.left = outerWidth - innerWidth;
       }
       this.moveStart(event);
     },
     moveEnd() {
       this.todoList[this.nowTable].card[this.movingIndex].pos = {
-        top: this.listStyleOrigin.top,
-        left: this.listStyleOrigin.left
+        top: this.movingPos.top,
+        left: this.movingPos.left
       };
       this.dragging = false;
       this.movingIndex = null;
@@ -471,31 +469,37 @@ input {
 }
 .mode-status {
   margin-right: 10px;
-  color: rgb(237, 157, 224);
+  color: #ed9de0;
 }
-.top-button {
-  color: white;
-  padding: 2px;
-  cursor: pointer;
-  border: 1px solid #821a82;
-  background: rgb(106, 7, 106);
-  margin-right: 3px;
-  &:hover {
-    border: 1px solid transparent;
-    box-shadow: 0px 0px 7px #e39ed5 inset, 0px 0px 4px #eec5e4;
-  }
-  &.current {
-    color: #f7d0ed;
-    border: 1px solid #e36dc5;
-    background: rgb(169, 47, 134);
-  }
+.top-button-bar {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  .top-button {
+    color: white;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid #821a82;
+    background: #6a076a;
+    margin-right: 3px;
+    &:hover {
+      border: 1px solid transparent;
+      box-shadow: 0px 0px 7px #e39ed5 inset, 0px 0px 4px #eec5e4;
+    }
+    &.current {
+      color: #f7d0ed;
+      border: 1px solid #e36dc5;
+      background: #a92f86;
+    }
 
-  &.add {
-    background: #072179;
-    border: 1px solid #1e5ea2;
-    color: #9ee9e9;
+    &.add {
+      background: #072179;
+      border: 1px solid #1e5ea2;
+      color: #9ee9e9;
+    }
   }
 }
+
 .todolist {
   display: flex;
   margin-top: 5px;
@@ -559,30 +563,27 @@ input {
       &.highlight {
         border: 0px solid red;
       }
-
-      //background: pink;
     }
     .true-list,
     .true-list-board {
-      //padding: 4px;
-
       position: absolute;
       color: purple;
       height: 200px;
       width: 170px;
-      border: 1px solid #dc56ba;
-      box-shadow: 1px 1px 4px #eec5e4, 0px 0px 5px #c255b4 inset;
+      //border: 1px solid #b63b97;
+      box-shadow: 1px 1px 4px #eec5e4, 1px 1px 3px #7d2a68,
+        0px 0px 5px #c255b4 inset;
       background: #dfbeed;
-
       text-align: left;
       &.move {
         transition: left 0.1s, top 0.1s;
       }
       .card-title {
         background: #cf7cf2;
+        border: 1px solid purple;
         box-shadow: 0px 0px 5px purple inset;
-        //margin-bottom: 3px;
         text-align: center;
+        text-shadow: 1px 1px 2px purple;
         .delete-btn {
           cursor: pointer;
         }
@@ -598,11 +599,12 @@ input {
         background: linear-gradient(#dfbeed 30%, rgba(255, 0, 255, 0)),
           linear-gradient(rgba(255, 255, 255, 0), #dfbeed 70%) bottom,
           radial-gradient(at top, #b32ba880, transparent 70%),
-          radial-gradient(#b32ba880, transparent 70%) bottom;
+          radial-gradient(at bottom, #b32ba880, transparent 70%) bottom;
         background-repeat: no-repeat;
         background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
         background-attachment: local, local, scroll, scroll;
         box-shadow: 0 -5px 5px -5px #b32ba880 inset;
+
         &.fixHeight {
           height: 145px;
         }
@@ -610,40 +612,53 @@ input {
         .delete-mode {
           cursor: pointer;
         }
+        .delete-mode {
+          color: red;
+        }
         .work-mode,
         .move-mode,
         .edit-mode,
         .delete-mode {
           font-size: 15px;
-          line-height: 15px;
+          line-height: 24px;
           white-space: nowrap;
           overflow: hidden;
+          //box-shadow: 0 0 3px purple;
           .done,
           .fail,
           .none {
+            height: 20px;
             padding: 2px 2px;
           }
           .fail {
-            color: red;
+            box-shadow: 0 0 2px red inset;
+            background-color: #e9bdbd88;
+
             &::before {
+              //vertical-align: top;
+              color: red;
               font-size: 24px;
-              line-height: 15px;
+              line-height: 0px;
               content: "☒";
             }
           }
           .done {
-            color: green;
+            box-shadow: 0 0 2px green inset;
+            background-color: #bde9c088;
             &::before {
+              color: green;
               font-size: 24px;
-              line-height: 15px;
+              line-height: 0px;
               content: "☑";
             }
           }
           .none {
-            color: blue;
+            box-shadow: 0 0 2px blue inset;
+            background-color: #c1bde988;
             &::before {
+              color: blue;
               font-size: 24px;
-              line-height: 15px;
+              line-height: 0px;
               content: "☐";
             }
           }
@@ -660,27 +675,9 @@ input {
     }
   }
 }
-// vue transition
-// .anime-card-item,
-// .add-card-item {
-//   transition: all 1s;
-//   //display: inline-block;
-// }
-// .anime-card-enter, .anime-card-leave-to
-// /* .list-complete-leave-active for below version 2.1.8 */ {
-//   opacity: 0;
-//   //transform: translateX(30px);
-// }
-// .anime-card-leave-active {
-//   position: absolute;
-// }
-.anime-card-item {
-  //display: inline-block;
-  // margin-right: 10px;
-}
 .anime-card-enter-active,
 .anime-card-leave-active {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
 }
 .anime-card-enter-from,
 .anime-card-leave-to {
@@ -688,7 +685,7 @@ input {
   transform: translateX(30px);
 }
 .anime-card-move {
-  transition: transform 0.8s ease;
+  transition: transform 0.4s ease;
 }
 .list-item {
   display: inline-block;

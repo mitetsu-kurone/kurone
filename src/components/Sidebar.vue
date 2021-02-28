@@ -3,18 +3,18 @@
     <router-link class="router home" to="/">Home</router-link>
     <router-link class="router" to="/profile">Profile</router-link>
     <div class="group">
-      <div class="group-title">Mix area</div>
+      <div class="group-title">Mix Trick</div>
       <router-link class="router" to="/mix/todoList">todoList</router-link>
       <router-link class="router" to="/mix/tableAdvance">
         tableAdvance
       </router-link>
-      <router-link class="router" to="/mix/kuroneTest">kuroneTest</router-link>
+      <!-- <router-link class="router" to="/mix/kuroneTest">kuroneTest</router-link>
       <router-link class="router" to="/mix/kuroneTest2">
         kuroneTest2
-      </router-link>
+      </router-link> -->
     </div>
     <div class="group">
-      <div class="group-title">Effect area</div>
+      <div class="group-title">Effect Trick</div>
       <router-link class="router" to="/effect/fakeTransition">
         fakeTransition
       </router-link>
@@ -36,6 +36,7 @@ export default {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  filter: url(#glitchonce);
 
   .router {
     height: 35px;
@@ -43,11 +44,13 @@ export default {
     text-decoration: none;
     border: 1px solid purple;
     color: cyan;
+
     background: linear-gradient(to right, purple 0%, #c462c4 100%);
     &.home {
       font-weight: bold;
     }
     &:hover {
+      filter: url(#glitchhover);
       border: 1px solid rgb(9, 0, 128);
       background: radial-gradient(ellipse at center, rgb(128, 0, 0), #e99de9);
     }
