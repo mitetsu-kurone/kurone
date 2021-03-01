@@ -6,7 +6,7 @@ export default {
   },
   // list and table source
   nextCardIndex: 4,
-  nextTaskIndex: 13,
+  nextTaskIndex: 14,
   nowTable: 0,
   todoList: [
     {
@@ -21,9 +21,9 @@ export default {
           },
           content: [
             { text: "vueresize", id: 0, status: "fail" },
-            { text: "vue3resize", id: 0, status: "none" },
-            { text: "vue3FullDrag", id: 1, status: "fail" },
-            { text: "vuedraggable", id: 2, status: "done" }
+            { text: "vue3resize", id: 1, status: "none" },
+            { text: "vue3FullDrag", id: 2, status: "fail" },
+            { text: "vuedraggable", id: 3, status: "done" }
           ]
         },
         {
@@ -34,9 +34,9 @@ export default {
             left: 587
           },
           content: [
-            { text: "lodash", id: 3, status: "done" },
-            { text: "vuex", id: 4, status: "done" },
-            { text: "vuewaypoint", id: 5, status: "none" }
+            { text: "lodash", id: 4, status: "done" },
+            { text: "vuex", id: 5, status: "done" },
+            { text: "vuewaypoint", id: 6, status: "none" }
           ]
         }
       ]
@@ -52,10 +52,10 @@ export default {
             left: 96
           },
           content: [
-            { text: "filter1", id: 6, status: "done" },
-            { text: "filter2", id: 7, status: "none" },
-            { text: "css1", id: 8, status: "fail" },
-            { text: "css2", id: 9, status: "none" }
+            { text: "filter1", id: 7, status: "done" },
+            { text: "filter2", id: 8, status: "none" },
+            { text: "css1", id: 9, status: "fail" },
+            { text: "css2", id: 10, status: "none" }
           ]
         },
         {
@@ -66,9 +66,9 @@ export default {
             left: 570
           },
           content: [
-            { text: "shadowScroll", id: 10, status: "none" },
-            { text: "rgbDisplay", id: 11, status: "none" },
-            { text: "moveDisplay", id: 12, status: "none" }
+            { text: "shadowScroll", id: 11, status: "none" },
+            { text: "rgbDisplay", id: 12, status: "none" },
+            { text: "moveDisplay", id: 13, status: "none" }
           ]
         }
       ]

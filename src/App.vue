@@ -1,7 +1,4 @@
 <template>
-  <!-- <div class="header">
-    header
-  </div> -->
   <svg
     style="position: absolute; width: 0; height: 0;"
     width="0"
@@ -78,11 +75,6 @@
   </svg>
   <Header class="outer-header" />
   <div class="outer-content">
-    <!-- <div class="side">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      side
-    </div> -->
     <Sidebar class="side" />
     <router-view class="inner" />
   </div>
@@ -115,18 +107,44 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  //color: #2c3e50;
   width: 1280px;
   height: calc(100vh - 20px);
-  //border: 1px solid cyan;
   margin: 10px auto;
-  //border: solid 1px red;
   border-radius: 5px;
   box-shadow: 0 0 4px #ea00ff;
 }
 
+// 裡面共用的bar
+.top-button-bar {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  .top-button {
+    color: white;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid #821a82;
+    background: #6a076a;
+    margin-right: 3px;
+    &:hover {
+      border: 1px solid transparent;
+      box-shadow: 0px 0px 7px #e39ed5 inset, 0px 0px 4px #eec5e4;
+    }
+    &.current {
+      color: #f7d0ed;
+      border: 1px solid #e36dc5;
+      background: #a92f86;
+    }
+
+    &.add {
+      background: #072179;
+      border: 1px solid #1e5ea2;
+      color: #9ee9e9;
+    }
+  }
+}
+
 .outer-header {
-  //border: 1px solid red;
   height: 50px;
 }
 .outer-content {
@@ -134,11 +152,9 @@ body {
   height: calc(100vh - 70px);
   .side {
     width: 280px;
-    //border: 1px solid blue;
   }
   .inner {
     width: 1000px;
-    //border: 1px solid green;
   }
 }
 .tran-effect-home-enter-active,
@@ -148,6 +164,5 @@ body {
 .tran-effect-home-enter-from,
 .tran-effect-home-leave-to {
   opacity: 0;
-  //transform: translateX(30px);
 }
 </style>

@@ -212,75 +212,6 @@ export default {
       showDataWork: false,
       mode: "move",
       movingIndex: null,
-      // nowTable: 0,
-      // nextCardIndex: 4,
-      // nextTaskIndex: 13,
-      // todoList: [
-      //   {
-      //     title: "testPlugin",
-      //     card: [
-      //       {
-      //         name: "testDrag",
-      //         id: 0,
-      //         pos: {
-      //           top: 24,
-      //           left: 208
-      //         },
-      //         content: [
-      //           { text: "vueresize", id: 0, status: "fail" },
-      //           { text: "vue3resize", id: 0, status: "none" },
-      //           { text: "vue3FullDrag", id: 1, status: "fail" },
-      //           { text: "vuedraggable", id: 2, status: "done" }
-      //         ]
-      //       },
-      //       {
-      //         name: "testMess",
-      //         id: 1,
-      //         pos: {
-      //           top: 79,
-      //           left: 587
-      //         },
-      //         content: [
-      //           { text: "lodash", id: 3, status: "done" },
-      //           { text: "vuex", id: 4, status: "done" },
-      //           { text: "vuewaypoint", id: 5, status: "none" }
-      //         ]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     title: "plan",
-      //     card: [
-      //       {
-      //         name: "glitch",
-      //         id: 2,
-      //         pos: {
-      //           top: 240,
-      //           left: 96
-      //         },
-      //         content: [
-      //           { text: "filter1", id: 6, status: "done" },
-      //           { text: "filter2", id: 7, status: "none" },
-      //           { text: "css1", id: 8, status: "fail" },
-      //           { text: "css2", id: 9, status: "none" }
-      //         ]
-      //       },
-      //       {
-      //         name: "trick",
-      //         id: 3,
-      //         pos: {
-      //           top: 177,
-      //           left: 570
-      //         },
-      //         content: [
-      //           { text: "shadowScroll", id: 10, status: "none" },
-      //           { text: "rgbDisplay", id: 11, status: "none" },
-      //           { text: "moveDisplay", id: 12, status: "none" }
-      //         ]
-      //       }
-      //     ]
-      //   }
-      // ],
       dragging: false,
       startPos: {
         top: 0,
@@ -309,40 +240,12 @@ export default {
     // 能直接更動的就先不弄action
     addTable() {
       this.actionAddTable();
-      // const taskCount = this.todoList.length;
-      // this.todoList.push({
-      //   title: "work" + (taskCount + 1),
-      //   card: []
-      // });
-      // this.nowTable = taskCount;
-      // this.addCard();
     },
     addCard() {
       this.actionAddCard();
-      // const id = this.nextCardIndex;
-      // const cardCount = this.todoList[this.nowTable].card.length;
-      // this.todoList[this.nowTable].card.push({
-      //   name: "card" + (cardCount + 1),
-      //   id,
-      //   pos: {
-      //     top: 0,
-      //     left: 0
-      //   },
-      //   content: []
-      // });
-      // this.addTask(cardCount);
-      // this.nextCardIndex += 1;
     },
     addTask(index) {
       this.actionAddTask(index);
-      // const id = this.nextTaskIndex;
-      // const leng = this.todoList[this.nowTable].card[index].content.length + 1;
-      // this.todoList[this.nowTable].card[index].content.push({
-      //   text: "new task" + leng,
-      //   id,
-      //   status: "none"
-      // });
-      // this.nextTaskIndex += 1;
     },
     switchStatus(cardIndex, taskIndex) {
       const statusTran = {
@@ -373,8 +276,6 @@ export default {
         return;
       }
       this.actionDeleteTable(tableIndex);
-      // this.todoList.splice(tableIndex, 1);
-      // this.nowTable = 0;
     },
     tranPos(source) {
       return {
@@ -461,7 +362,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input {
   width: 60%;
   background: none;
@@ -470,34 +371,6 @@ input {
 .mode-status {
   margin-right: 10px;
   color: #ed9de0;
-}
-.top-button-bar {
-  height: 30px;
-  display: flex;
-  align-items: center;
-  .top-button {
-    color: white;
-    padding: 2px;
-    cursor: pointer;
-    border: 1px solid #821a82;
-    background: #6a076a;
-    margin-right: 3px;
-    &:hover {
-      border: 1px solid transparent;
-      box-shadow: 0px 0px 7px #e39ed5 inset, 0px 0px 4px #eec5e4;
-    }
-    &.current {
-      color: #f7d0ed;
-      border: 1px solid #e36dc5;
-      background: #a92f86;
-    }
-
-    &.add {
-      background: #072179;
-      border: 1px solid #1e5ea2;
-      color: #9ee9e9;
-    }
-  }
 }
 
 .todolist {
@@ -598,13 +471,16 @@ input {
         overflow: auto;
         background: linear-gradient(#dfbeed 30%, rgba(255, 0, 255, 0)),
           linear-gradient(rgba(255, 255, 255, 0), #dfbeed 70%) bottom,
-          radial-gradient(at top, #b32ba880, transparent 70%),
-          radial-gradient(at bottom, #b32ba880, transparent 70%) bottom;
+          radial-gradient(at top, #b32ba8d9, transparent 70%),
+          radial-gradient(at bottom, #b32ba8d9, transparent 70%) bottom;
         background-repeat: no-repeat;
-        background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+        background-size: 100% 30px, 100% 30px, 100% 12px, 100% 12px;
         background-attachment: local, local, scroll, scroll;
         box-shadow: 0 -5px 5px -5px #b32ba880 inset;
 
+        input {
+          vertical-align: top;
+        }
         &.fixHeight {
           height: 145px;
         }
@@ -632,10 +508,9 @@ input {
           }
           .fail {
             box-shadow: 0 0 2px red inset;
-            background-color: #e9bdbd88;
+            background-color: #e9bdbd30;
 
             &::before {
-              //vertical-align: top;
               color: red;
               font-size: 24px;
               line-height: 0px;
@@ -644,7 +519,7 @@ input {
           }
           .done {
             box-shadow: 0 0 2px green inset;
-            background-color: #bde9c088;
+            background-color: #bde9c030;
             &::before {
               color: green;
               font-size: 24px;
@@ -654,7 +529,7 @@ input {
           }
           .none {
             box-shadow: 0 0 2px blue inset;
-            background-color: #c1bde988;
+            background-color: #c1bde930;
             &::before {
               color: blue;
               font-size: 24px;

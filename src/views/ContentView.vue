@@ -8,14 +8,14 @@
 
 <script>
 export default {
-  //name: "MixHeader"
+  //name: "ContentView"
 };
 </script>
 
 <style lang="scss">
 .router-view {
+  overflow: auto;
   border-radius: 0 0 5px 0;
-  //box-shadow: 0 0 5px rgb(187, 114, 187) inset;
   padding: 5px;
 }
 .tran-effect-enter-active,
@@ -25,9 +25,5 @@ export default {
 .tran-effect-enter-from,
 .tran-effect-leave-to {
   opacity: 0;
-  //transform: translateX(30px);
 }
-// .tran-effect-move {
-//   transition: transform 0.8s ease;
-// }
 </style>
