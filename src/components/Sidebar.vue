@@ -29,10 +29,18 @@
     </div>
     <div class="group">
       <div class="group-title">Effect Trick</div>
-      <router-link class="router" to="/effect/randomTyper">
+      <router-link
+        class="router"
+        :class="{ current: $route.name === 'randomTyper' }"
+        to="/effect/randomTyper"
+      >
         randomTyper
       </router-link>
-      <router-link class="router" to="/effect/scrollShadow">
+      <router-link
+        class="router"
+        :class="{ current: $route.name === 'scrollShadow' }"
+        to="/effect/scrollShadow"
+      >
         scrollShadow
       </router-link>
     </div>
