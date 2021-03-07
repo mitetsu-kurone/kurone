@@ -128,4 +128,10 @@ input {
     }
   }
 }
+@media (max-width: 600px) {
+  .table {
+    width: 100%;
+    overflow-x: auto;
+  }
+}
 </style>

@@ -8,7 +8,7 @@
           <div class="right main-border">
             ID: 美鉄クロネ<br />
             type: glitch<br />
-            Alignment: 守序中立
+            Faction: 守序中立
           </div>
         </div>
         <div v-else @click="glitch = false" class="profile">
@@ -16,7 +16,7 @@
           <div class="right main-border glitch">
             ID: ミテツ黒音<br />
             type: glitch bug<br />
-            Alignment: 混亂邪惡
+            Faction: 混亂邪惡
           </div>
         </div>
       </transition>
@@ -124,6 +124,7 @@ export default {
 }
 .profile {
   display: flex;
+  flex-wrap: wrap;
 
   .photo {
     transition: color 0.5s ease 0.5s, box-shadow 0.5s ease 0.5s,
@@ -201,5 +202,17 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+@media (max-width: 600px) {
+  .profile-card {
+    width: 80%;
+    height: auto;
+    margin: 5px auto;
+  }
+  .profile {
+    .right {
+      width: auto;
+    }
+  }
 }
 </style>

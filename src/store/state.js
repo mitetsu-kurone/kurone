@@ -16,8 +16,8 @@ export default {
           name: "testDrag",
           id: 0,
           pos: {
-            top: 24,
-            left: 208
+            top: 12,
+            left: 24
           },
           content: [
             { text: "vueresize", id: 0, status: "fail" },
@@ -30,8 +30,8 @@ export default {
           name: "testMess",
           id: 1,
           pos: {
-            top: 79,
-            left: 587
+            top: 317,
+            left: 99
           },
           content: [
             { text: "lodash", id: 4, status: "done" },
@@ -62,8 +62,8 @@ export default {
           name: "trick",
           id: 3,
           pos: {
-            top: 177,
-            left: 570
+            top: 16,
+            left: 90
           },
           content: [
             { text: "shadowScroll", id: 11, status: "none" },

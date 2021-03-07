@@ -47,7 +47,7 @@
     </div>
     <div class="todolist">
       <div class="table-tab">
-        <div v-for="(table, index) in todoList" :key="index">
+        <template v-for="(table, index) in todoList" :key="index">
           <div
             v-if="mode === 'edit'"
             class="table-child delete-btn"
@@ -72,7 +72,7 @@
           >
             {{ table.title }}
           </div>
-        </div>
+        </template>
       </div>
       <div class="list-outer" ref="listouter">
         <transition-group name="anime-card" tag="div">
@@ -389,7 +389,7 @@ input {
       height: 30px;
       line-height: 30px;
       color: #edd6f0;
-      box-shadow: 0px 0px 1px #c487b5 inset;
+      box-shadow: 0px 0px 2px #c487b5 inset;
       &.current {
         box-shadow: 0px 0px 4px #eec5e4 inset;
       }
@@ -576,5 +576,25 @@ input {
 .list-item {
   display: inline-block;
   margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+  .todolist {
+    flex-direction: column;
+    .table-tab {
+      width: auto;
+      display: flex;
+      flex-wrap: wrap;
+      border: 1px solid red;
+      margin-bottom: 10px;
+      .table-child {
+        width: 100px;
+        flex: 1 0 auto;
+      }
+    }
+    .list-outer {
+      width: auto;
+    }
+  }
 }
 </style>

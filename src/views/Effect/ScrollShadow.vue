@@ -71,4 +71,16 @@
     background-attachment: local, local, scroll, scroll;
   }
 }
+@media (max-width: 600px) {
+  .main .display {
+    margin-right: 20px;
+  }
+  .content {
+    height: 400px;
+    width: 250px;
+    .scroll-shadow {
+      width: 250px;
+    }
+  }
+}
 </style>

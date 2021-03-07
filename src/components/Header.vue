@@ -1,6 +1,10 @@
 <template>
   <div class="header">
-    <div class="text-magic" data-word="クロネ の Vue Test Backroom">
+    <div
+      class="text-magic"
+      data-word="クロネ の Vue Test Backroom"
+      data-mobile="クロネ の V.T.B."
+    >
       <div class="white"></div>
     </div>
   </div>
@@ -25,6 +29,7 @@ export default {
   font-size: 25px;
   position: relative;
   box-shadow: 0 0 5px black inset;
+  white-space: nowrap;
 }
 .text-magic {
   content: attr(data-word);
@@ -106,5 +111,16 @@ export default {
     animation: whitemove 5s ease-out 1;
   }
   // color: transparent;
+}
+@media (max-width: 360px) {
+  .text-magic {
+    content: attr(data-mobile);
+    &::before,
+    &::after,
+    &:hover::before,
+    &:hover::after {
+      content: attr(data-mobile);
+    }
+  }
 }
 </style>

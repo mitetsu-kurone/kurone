@@ -111,9 +111,9 @@
     </defs>
   </svg>
   <Header class="outer-header" />
-  <div class="outer-content">
-    <Sidebar class="side" />
-    <router-view class="inner" />
+  <div class="home-outer-content" @touchstart="touchStart" @touchend="touchEnd">
+    <Sidebar class="home-side-content" :class="{ mobileside: mobileSideBar }" />
+    <router-view class="home-inner-content" />
   </div>
 </template>
 
@@ -124,9 +124,41 @@ import Sidebar from "@/components/Sidebar.vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      preventItem: {
+        "list move-mode": true,
+        fail: true,
+        none: true,
+        done: true
+      },
+      recordX: -1,
+      mobileSideBar: false
+    };
+  },
   components: {
     Header,
     Sidebar
+  },
+  methods: {
+    touchStart(event) {
+      if (this.preventItem[event.target.className]) {
+        return;
+      }
+      if (!this.mobileSideBar && event.touches[0].clientX > 100) {
+        return;
+      }
+      this.recordX = event.touches[0].clientX;
+    },
+    touchEnd(event) {
+      const diff = event.changedTouches[0].clientX - this.recordX;
+      if (!this.mobileSideBar && diff > 200) {
+        this.mobileSideBar = true;
+      }
+      if (this.mobileSideBar && diff < -200) {
+        this.mobileSideBar = false;
+      }
+    }
   }
 };
 </script>
@@ -156,9 +188,11 @@ body {
 
 // 裡面共用的bar
 .top-button-bar {
-  height: 30px;
+  min-height: 30px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  white-space: nowrap;
   .top-button {
     color: white;
     padding: 2px;
@@ -166,6 +200,7 @@ body {
     border: 1px solid #821a82;
     background: #6a076a;
     margin-right: 3px;
+    margin-bottom: 3px;
     &:hover {
       border: 1px solid transparent;
       box-shadow: 0px 0px 7px #e39ed5 inset, 0px 0px 4px #eec5e4;
@@ -187,14 +222,14 @@ body {
 .outer-header {
   height: 50px;
 }
-.outer-content {
+.home-outer-content {
   display: flex;
   height: calc(100vh - 70px);
-  .side {
+  .home-side-content {
     width: 280px;
     min-height: 750px;
   }
-  .inner {
+  .home-inner-content {
     width: 1000px;
     min-height: 750px;
   }
@@ -220,21 +255,58 @@ body {
   }
 }
 
-::-webkit-scrollbar {
-  width: 3px;
-  background: #eec5e4b0;
-  opacity: 0.3;
+@media (min-width: 600px) {
+  ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background: #eec5e4b0;
+    opacity: 0.3;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-piece {
+    background: #e295cf96;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #8d218d6e;
+  }
 }
 
-::-webkit-scrollbar-button {
-  display: none;
-}
-
-::-webkit-scrollbar-piece {
-  background: #e295cf96;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #8d218d6e;
+// 不考慮PC600以下的狀況，這邊都當手機版
+@media (max-width: 600px) {
+  .home-outer-content {
+    height: auto;
+    position: relative;
+    .home-side-content {
+      position: absolute;
+      background: black;
+      z-index: 9999;
+      left: -290px;
+      transition: left 0.5s;
+      &.mobileside {
+        left: 0px;
+      }
+    }
+    .home-inner-content {
+      width: 100%;
+      min-height: auto;
+      height: auto;
+    }
+  }
+  .top-button-bar {
+    .top-button {
+      flex: 1 0 100px;
+    }
+  }
+  #app {
+    width: 100%;
+    margin: 0;
+    min-height: auto;
+    height: auto;
+  }
 }
 </style>

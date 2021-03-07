@@ -26,6 +26,7 @@
         <div class="button" @click="runAll(25)">FPS 25</div>
         <div class="button" @click="runAll(50)">FPS 50</div>
         <div class="button" @click="runAll(100)">FPS 100</div>
+        <div class="button" @click="runAll(150)">FPS 150</div>
       </div>
     </div>
   </div>
@@ -120,7 +121,7 @@ export default {
   .show-result {
     padding: 5px;
     box-shadow: 0 0 3px purple inset;
-    height: 100px;
+    min-height: 50px;
     .border {
       color: #e463f0;
       margin-bottom: 10px;
@@ -128,7 +129,7 @@ export default {
     .home-title {
       font-size: 22px;
       margin-bottom: 30px;
-      height: 0px;
+      min-height: 50px;
       text-shadow: 0 0 3px #f200ff;
     }
   }
@@ -143,11 +144,11 @@ export default {
       margin-top: 5px;
       input {
         height: 50px;
-        width: 350px;
+        width: 80%;
         font-size: 20px;
         text-align: center;
-        border: 1px solid #420080;
-        background: #1a1547;
+        border: 1px solid #004180;
+        background: #19172b;
         color: white;
       }
     }
@@ -155,22 +156,26 @@ export default {
   .run-panel {
     margin-top: 15px;
     padding: 5px;
-    height: 55px;
+    min-height: 55px;
     box-shadow: 0 0 3px green inset;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
     .button {
+      flex: 1 0 auto;
       cursor: pointer;
       background: #76af76;
       border: 1px solid green;
       box-shadow: 0 0 3px green inset;
-      width: 90px;
+      width: 120px;
       height: 45px;
       line-height: 45px;
       font-weight: bold;
+      margin-bottom: 5px;
       text-align: center;
+      white-space: nowrap;
       color: #223d22;
       margin-right: 6px;
       &:hover {
@@ -183,6 +188,18 @@ export default {
         background: #537453;
         cursor: wait;
       }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .main .display {
+    margin-right: 20px;
+  }
+  .content {
+    height: 400px;
+    width: 250px;
+    .scroll-shadow {
+      width: 250px;
     }
   }
 }

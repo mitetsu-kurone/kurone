@@ -32,7 +32,9 @@
         :key="'log-' + index"
       >
         <div class="date">{{ data.date }}</div>
-        <div class="content">{{ data.content }}</div>
+        <div class="content">
+          {{ data.content }}
+        </div>
       </div>
     </div>
   </div>
@@ -138,7 +140,7 @@ export default {
 .home-title {
   font-size: 22px;
   margin-bottom: 30px;
-  height: 0px;
+  height: 40px;
   text-shadow: 0 0 3px #f200ff;
   cursor: crosshair;
 }
@@ -169,12 +171,21 @@ export default {
   .log-content {
     box-shadow: 0 0 3px red inset;
     display: flex;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    align-items: center;
     .date {
-      border-right: 1px dotted purple;
-      width: 200px;
+      flex: 0 1 auto;
+      width: 140px;
+      padding: 3px;
     }
     .content {
-      flex: 1 0 auto;
+      border-left: 1px dotted purple;
+      width: 150px;
+      flex: 1 1 auto;
+      padding: 3px;
     }
   }
 }
