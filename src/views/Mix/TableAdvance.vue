@@ -132,6 +132,11 @@ input {
   .table {
     width: 100%;
     overflow-x: auto;
+    .table-header,
+    .table-content {
+      // 暫時沒有找到寫max-content以外顯示正確的
+      width: 750px;
+    }
   }
 }
 </style>

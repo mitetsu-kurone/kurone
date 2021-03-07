@@ -125,6 +125,7 @@ export default {
     .border {
       color: #e463f0;
       margin-bottom: 10px;
+      font-size: 22px;
     }
     .home-title {
       font-size: 22px;
@@ -134,7 +135,7 @@ export default {
     }
   }
   .edit-text {
-    padding: 5px;
+    padding: 5px 5px 15px 5px;
     box-shadow: 0 0 3px blue inset;
     margin-top: 15px;
     .border {
