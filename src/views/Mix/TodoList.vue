@@ -391,7 +391,7 @@ input {
       color: #edd6f0;
       box-shadow: 0px 0px 2px #c487b5 inset;
       &.current {
-        box-shadow: 0px 0px 4px #eec5e4 inset;
+        box-shadow: 0px 0px 4px #dda7cf inset, 0px 0px 4px #dda7cf inset;
       }
       &.delete-btn {
         color: red;
@@ -495,10 +495,6 @@ input {
         &.fixHeight {
           height: 145px;
         }
-        .work-mode,
-        .delete-mode {
-          cursor: pointer;
-        }
         .delete-mode {
           color: red;
         }
@@ -516,6 +512,7 @@ input {
           .none {
             height: 20px;
             padding: 2px 2px;
+            cursor: pointer;
           }
           .fail {
             box-shadow: 0 0 2px red inset;
@@ -585,7 +582,6 @@ input {
       width: auto;
       display: flex;
       flex-wrap: wrap;
-      border: 1px solid red;
       margin-bottom: 10px;
       .table-child {
         width: 100px;

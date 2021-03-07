@@ -72,14 +72,14 @@
   }
 }
 @media (max-width: 600px) {
-  .main .display {
+  .main .display:first-child {
     margin-right: 20px;
   }
   .content {
     height: 400px;
-    width: 150px;
+    width: 140px;
     .scroll-shadow {
-      width: 150px;
+      width: 140px;
     }
   }
 }
