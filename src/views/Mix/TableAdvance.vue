@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <h1>This is TableAdvance page</h1> -->
-    <div v-if="showDataWork" class="work-data">
+    <div v-if="showDataWork" class="data-work">
       {{ todoList }}
     </div>
     <div class="top-button-bar">
@@ -17,7 +16,7 @@
         <div class="table-item">CardID</div>
         <div class="table-item">TaskID</div>
         <div class="table-item">status</div>
-        <div class="table-item">content</div>
+        <div class="table-item large">content</div>
       </div>
       <template v-for="(table, index) in todoList" :key="index">
         <template v-for="card in table.card" :key="card.id">
@@ -49,7 +48,7 @@
                 </option>
               </select>
             </div>
-            <div class="table-item">
+            <div class="table-item large">
               <input type="text" v-model="task.text" />
               <!-- {{ task.text }} -->
             </div>
@@ -91,20 +90,27 @@ input {
   border: 1px dotted purple;
   width: 80%;
   text-align: center;
+  font-size: 18px;
 }
 .table {
   color: #f8cdfa;
   margin-top: 5px;
   border: 1px solid purple;
-  width: 80%;
+  width: 85%;
   .table-item {
-    flex: 1 0 100px;
+    font-size: 18px;
+    width: 100px;
+    flex: 1 0 auto;
     height: 30px;
     line-height: 30px;
     box-shadow: 0 0 2px rgb(227, 78, 227) inset;
+    &.large {
+      width: 150px;
+    }
     .option {
       background-color: #4a074a;
       color: #f8cdfa;
+      font-size: 18px;
     }
   }
   .table-header {
@@ -112,8 +118,14 @@ input {
     display: flex;
   }
   .table-content {
+    cursor: crosshair;
     display: flex;
     align-items: center;
+    transition: box-shadow 0.3s, background-color 0.3s;
+    &:hover {
+      box-shadow: 0 0 3px #e4a8e4 inset, 0 0 3px #e4a8e4 inset;
+      background-color: #ff00ff33;
+    }
   }
 }
 </style>

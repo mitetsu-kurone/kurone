@@ -29,8 +29,8 @@
     </div>
     <div class="group">
       <div class="group-title">Effect Trick</div>
-      <router-link class="router" to="/effect/fakeTransition">
-        fakeTransition
+      <router-link class="router" to="/effect/randomTyper">
+        randomTyper
       </router-link>
       <router-link class="router" to="/effect/scrollShadow">
         scrollShadow
@@ -58,7 +58,7 @@ export default {
     box-shadow: 0 0 2px #8a7a8a inset;
     // 顏色吃到內建的 沒事不要直接用router-link
     color: white;
-    text-shadow: 0 0 2px red;
+    text-shadow: 0 0 8px #0400ff;
 
     background: linear-gradient(to right, purple 0%, #170f17 100%);
     &.home {
@@ -69,6 +69,7 @@ export default {
     }
     &:hover {
       box-shadow: 0 0 5px purple inset;
+      text-shadow: 0 0 8px red;
       filter: url(#glitchhover);
       color: #5f155f;
       background: radial-gradient(ellipse at center, #dab3b3, #e99de9);

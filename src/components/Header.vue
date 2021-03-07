@@ -16,7 +16,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   border-radius: 5px 5px 0 0;
-  background: purple;
+  background: #3c0a3c;
   color: white;
   text-shadow: 0 0 5px white;
   display: flex;
@@ -101,7 +101,7 @@ export default {
     left: 5px;
     width: 80%;
     height: 2px;
-    background: purple;
+    background: #3c0a3c;
     z-index: 4;
     animation: whitemove 5s ease-out 1;
   }

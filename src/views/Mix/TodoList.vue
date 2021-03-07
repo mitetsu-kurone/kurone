@@ -1,13 +1,12 @@
 <template>
   <div>
     <!-- <h1>This is TodoList page</h1> -->
-    <div v-if="showDataWork">
+    <div v-if="showDataWork" class="data-work">
       mode: {{ mode }},movingIndex: {{ movingIndex }},startPos:{{
         startPos
       }},movingPos:{{ movingPos }},
       <hr />
-      {{ todoList }}
-      <hr />
+      {{ todoList[nowTable] }}
     </div>
     <div class="top-button-bar">
       <span class="top-button add" @click="showDataWork = !showDataWork"
@@ -383,6 +382,7 @@ input {
     border-bottom: 1px solid #5f1167;
     width: 15%;
     .table-child {
+      font-size: 20px;
       transition: box-shadow 0.5s;
       cursor: pointer;
       background: #681968;
@@ -401,12 +401,14 @@ input {
     input {
       color: white;
       text-align: center;
+      font-size: 20px;
+      border: 1px dotted #eec5e4;
     }
   }
   .list-outer {
     background: #1d0721;
     border: 1px solid #5f1167;
-    height: 450px;
+    height: 600px;
     width: 80%;
     //margin: 0 auto;
     position: relative;
@@ -416,11 +418,14 @@ input {
     .add-task {
       background: #a7b6ea;
       border: 1px solid #6b9bce;
+      box-shadow: 0 0 2px #1e5ea2 inset;
       color: #1e5ea2;
+      text-shadow: 0 0 3px #1d7def;
       width: 70px;
-      font-size: 15px;
-      height: 18px;
-      margin-top: 5px;
+      font-size: 13px;
+      height: 15px;
+      line-height: 15px;
+      margin-top: 2px;
       margin-left: 5px;
       padding: 2px;
       text-align: center;
@@ -452,6 +457,9 @@ input {
         transition: left 0.1s, top 0.1s;
       }
       .card-title {
+        height: 28px;
+        vertical-align: middle;
+        font-size: 20px;
         background: #cf7cf2;
         border: 1px solid purple;
         box-shadow: 0px 0px 5px purple inset;
@@ -464,10 +472,12 @@ input {
         input {
           width: 90%;
           text-align: center;
+          vertical-align: middle;
+          font-size: 20px;
         }
       }
       .card-content {
-        height: 177px;
+        height: 170px;
         overflow: auto;
         background: linear-gradient(#dfbeed 30%, rgba(255, 0, 255, 0)),
           linear-gradient(rgba(255, 255, 255, 0), #dfbeed 70%) bottom,
@@ -480,6 +490,7 @@ input {
 
         input {
           vertical-align: top;
+          font-size: 15px;
         }
         &.fixHeight {
           height: 145px;

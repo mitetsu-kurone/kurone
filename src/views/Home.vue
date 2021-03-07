@@ -9,11 +9,12 @@
     </div>
     <div class="intro">
       我是美鉄クロネ(mitetsu kurone)，這裡是VTB，不是VTB<br />
-      ...喔抱歉，是Vue Test Backroom,不是Virtual TuBer<br />
+      ...喔抱歉，是Vue Test Backroom,不是Virtual youTuBer<br />
       <br />
-      這裡不存在會動又會講話的3D模組，也不會有日文語音，只有象徵性頭圖和設定<br />
-      只會整理存放和改造自己有興趣的各種素材<br />
+      這裡不存在會動又會講話的3D模組，也不會有日文語音和直播，只有象徵性形象頭圖和設定，設定僅供參考，若需通靈請僅用於滿足自我妄想。<br />
+      只會整理存放和改造自己有興趣的各種素材，故原則上只會因為我有新的個人慾望想要滿足的時候，才會有新增項目<br />
       特效怎麼做的自己直接整份co回家看研究比較快，原始碼都公開的，也整理過<br />
+      存在大量濫用的box-shadow，但我覺得還不太夠<br />
       <br />
       轉貼自由只是更新時間未定，不保證下一次什麼時候更新，也不保證哪個項目什麼時候完成<br />
       <!-- 因為不是很重要，想想就不擺在可視首頁了，沒錯，你只有看源碼的時候才會留意到這段話 -->
@@ -49,6 +50,10 @@ export default {
       title: "INTRODUCTION",
       logTitle: "History Note",
       log: [
+        {
+          date: "2021-3-7",
+          content: "randomType, scrollView追加"
+        },
         {
           date: "2021-3-1",
           content: "更改VTB簡稱的縮寫"

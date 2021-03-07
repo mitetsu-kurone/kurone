@@ -63,13 +63,13 @@ const routes = [
   },
   {
     path: "/effect",
-    redirect: "/effect/fakeTransition",
+    redirect: "/effect/randomTyper",
     component: () => import("../views/ContentView"),
     children: [
       {
-        path: "fakeTransition",
-        name: "fakeTransition",
-        component: () => import("@/views/Effect/FakeTransition")
+        path: "randomTyper",
+        name: "randomTyper",
+        component: () => import("@/views/Effect/randomTyper")
       },
       {
         path: "scrollShadow",

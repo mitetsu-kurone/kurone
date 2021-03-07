@@ -73,6 +73,43 @@
       </filter>
     </defs>
   </svg>
+  <svg
+    style="position: absolute; width: 0; height: 0;"
+    width="0"
+    height="0"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    class="svg-sprite"
+  >
+    <defs>
+      <filter id="glitchextra">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.02 0.5"
+          numOctaves="1"
+          result="warp"
+          seed="1"
+        >
+          <animate
+            attributeName="baseFrequency"
+            calcMode="linear"
+            values="0.02 0.5;0.000001 0.000001;0.000001 0.000001"
+            keyTimes="0;0.15;1"
+            dur="0.5s"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+        <feDisplacementMap
+          xChannelSelector="R"
+          yChannelSelector="G"
+          scale="30"
+          in="SourceGraphic"
+          in2="warp"
+        ></feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
   <Header class="outer-header" />
   <div class="outer-content">
     <Sidebar class="side" />
@@ -109,7 +146,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   width: 1280px;
+  min-height: 750px;
   height: calc(100vh - 20px);
+  overflow-y: auto;
   margin: 10px auto;
   border-radius: 5px;
   box-shadow: 0 0 4px #ea00ff;
@@ -153,9 +192,11 @@ body {
   height: calc(100vh - 70px);
   .side {
     width: 280px;
+    min-height: 750px;
   }
   .inner {
     width: 1000px;
+    min-height: 750px;
   }
 }
 .tran-effect-home-enter-active,
@@ -165,5 +206,35 @@ body {
 .tran-effect-home-enter-from,
 .tran-effect-home-leave-to {
   opacity: 0;
+}
+.data-work {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px dotted blue;
+  box-shadow: 0 0 3px #a8a8dd inset;
+  margin-bottom: 10px;
+  padding: 5px;
+  color: #22c9c9;
+  hr {
+    border: 1px solid #89c4c466;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  background: #eec5e4b0;
+  opacity: 0.3;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-piece {
+  background: #e295cf96;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8d218d6e;
 }
 </style>
