@@ -149,7 +149,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
+    font-size: 23px;
   }
 }
 .detail {

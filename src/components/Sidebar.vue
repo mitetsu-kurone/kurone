@@ -110,4 +110,9 @@ export default {
     }
   }
 }
+@media (max-width: 600px) {
+  .sidebar {
+    cursor: default;
+  }
+}
 </style>

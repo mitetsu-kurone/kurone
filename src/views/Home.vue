@@ -182,7 +182,7 @@ export default {
       padding: 3px;
     }
     .content {
-      border-left: 1px dotted purple;
+      border-left: 1px solid purple;
       width: 150px;
       flex: 1 1 auto;
       padding: 3px;

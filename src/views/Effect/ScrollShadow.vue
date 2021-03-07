@@ -77,9 +77,9 @@
   }
   .content {
     height: 400px;
-    width: 250px;
+    width: 150px;
     .scroll-shadow {
-      width: 250px;
+      width: 150px;
     }
   }
 }

@@ -128,6 +128,7 @@ export default {
     return {
       preventItem: {
         "list move-mode": true,
+        "table-item": true,
         fail: true,
         none: true,
         done: true
@@ -142,7 +143,10 @@ export default {
   },
   methods: {
     touchStart(event) {
-      if (this.preventItem[event.target.className]) {
+      if (
+        event.target.tagName === "INPUT" ||
+        this.preventItem[event.target.className]
+      ) {
         return;
       }
       if (!this.mobileSideBar && event.touches[0].clientX > 100) {
@@ -151,13 +155,18 @@ export default {
       this.recordX = event.touches[0].clientX;
     },
     touchEnd(event) {
+      if (this.recordX === -1) {
+        return;
+      }
       const diff = event.changedTouches[0].clientX - this.recordX;
+
       if (!this.mobileSideBar && diff > 200) {
         this.mobileSideBar = true;
       }
       if (this.mobileSideBar && diff < -200) {
         this.mobileSideBar = false;
       }
+      this.recordX = -1;
     }
   }
 };
@@ -277,13 +286,18 @@ body {
 }
 
 // 不考慮PC600以下的狀況，這邊都當手機版
+// 當前呈現由於PC版同時存在height和min-height，手機板需要兩者覆蓋
 @media (max-width: 600px) {
   .home-outer-content {
-    height: auto;
     position: relative;
+    min-height: calc(100vh - 50px);
+    height: calc(100vh - 50px);
     .home-side-content {
+      min-height: calc(100vh - 50px);
+      height: calc(100vh - 50px);
       position: absolute;
       background: black;
+      box-shadow: 2px 2px 15px #653e64;
       z-index: 9999;
       left: -290px;
       transition: left 0.5s;
@@ -292,9 +306,9 @@ body {
       }
     }
     .home-inner-content {
+      min-height: calc(100vh - 60px);
+      height: calc(100vh - 60px);
       width: 100%;
-      min-height: auto;
-      height: auto;
     }
   }
   .top-button-bar {
@@ -305,8 +319,9 @@ body {
   #app {
     width: 100%;
     margin: 0;
-    min-height: auto;
-    height: auto;
+    height: 100vh;
+    min-height: 100vh;
+    border-radius: 0;
   }
 }
 </style>
