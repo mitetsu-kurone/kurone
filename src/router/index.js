@@ -75,6 +75,11 @@ const routes = [
         path: "scrollShadow",
         name: "scrollShadow",
         component: () => import("@/views/Effect/ScrollShadow")
+      },
+      {
+        path: "linkList",
+        name: "linkList",
+        component: () => import("@/views/Effect/linkList")
       }
     ]
   },

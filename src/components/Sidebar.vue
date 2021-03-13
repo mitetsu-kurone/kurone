@@ -7,49 +7,64 @@
       to="/profile"
       >Profile</router-link
     >
-    <div class="group">
-      <div class="group-title">Mix Trick</div>
+    <div class="group" v-for="(group, index) in struct" :key="'group-' + index">
+      <div class="group-title">{{ group.groupName }}</div>
       <router-link
+        v-for="(item, indexContent) in group.content"
+        :key="indexContent"
         class="router"
-        :class="{ current: $route.name === 'todoList' }"
-        to="/mix/todoList"
-        >todoList</router-link
+        :class="{ current: $route.name === item.routerName }"
+        :to="item.routerPath"
+        >{{ item.displayName }}</router-link
       >
-      <router-link
-        class="router"
-        :class="{ current: $route.name === 'tableAdvance' }"
-        to="/mix/tableAdvance"
-      >
-        tableAdvance
-      </router-link>
-      <!-- <router-link class="router" to="/mix/kuroneTest">kuroneTest</router-link>
-      <router-link class="router" to="/mix/kuroneTest2">
-        kuroneTest2
-      </router-link> -->
-    </div>
-    <div class="group">
-      <div class="group-title">Effect Trick</div>
-      <router-link
-        class="router"
-        :class="{ current: $route.name === 'randomTyper' }"
-        to="/effect/randomTyper"
-      >
-        randomTyper
-      </router-link>
-      <router-link
-        class="router"
-        :class="{ current: $route.name === 'scrollShadow' }"
-        to="/effect/scrollShadow"
-      >
-        scrollShadow
-      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Sidebar"
+  name: "Sidebar",
+  data() {
+    return {
+      struct: [
+        {
+          groupName: "Mix Trick",
+          content: [
+            {
+              displayName: "todoList",
+              routerPath: "/mix/todoList",
+              routerName: "todoList"
+            },
+            {
+              displayName: "tableAdvance",
+              routerPath: "/mix/tableAdvance",
+              routerName: "tableAdvance"
+            }
+          ]
+        },
+        {
+          groupName: "Effect Trick",
+          content: [
+            {
+              displayName: "randomTyper",
+              routerPath: "/effect/randomTyper",
+              routerName: "randomTyper"
+            },
+            {
+              displayName: "scrollShadow",
+              routerPath: "/effect/scrollShadow",
+              routerName: "scrollShadow"
+            },
+            {
+              displayName: "linkList",
+              routerPath: "/effect/linkList",
+              routerName: "linkList"
+            }
+          ]
+        }
+      ]
+    };
+  }
 };
 </script>
 
@@ -57,7 +72,7 @@ export default {
 .sidebar {
   display: flex;
   flex-direction: column;
-  cursor: pointer;
+
   filter: url(#glitchonce);
   .router {
     height: 35px;
@@ -67,7 +82,7 @@ export default {
     // 顏色吃到內建的 沒事不要直接用router-link
     color: white;
     text-shadow: 0 0 8px #0400ff;
-
+    cursor: pointer;
     background: linear-gradient(to right, purple 0%, #170f17 100%);
     &.home {
       font-weight: bold;
