@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <div
+      @click="pushToHome()"
       class="text-magic"
       data-word="クロネ の Vue Test Backroom"
       data-mobile="クロネ の V.T.B."
@@ -12,7 +13,12 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  methods: {
+    pushToHome() {
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 

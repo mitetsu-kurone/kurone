@@ -111,7 +111,12 @@
     </defs>
   </svg>
   <Header class="outer-header" />
-  <div class="home-outer-content" @touchstart="touchStart" @touchend="touchEnd">
+  <div
+    class="home-outer-content"
+    @touchstart="touchStart"
+    @touchmove.prevent
+    @touchend="touchEnd"
+  >
     <Sidebar class="home-side-content" :class="{ mobileside: mobileSideBar }" />
     <router-view class="home-inner-content" />
   </div>
@@ -160,10 +165,10 @@ export default {
       }
       const diff = event.changedTouches[0].clientX - this.recordX;
 
-      if (!this.mobileSideBar && diff > 200) {
+      if (!this.mobileSideBar && diff > 100) {
         this.mobileSideBar = true;
       }
-      if (this.mobileSideBar && diff < -200) {
+      if (this.mobileSideBar && diff < -100) {
         this.mobileSideBar = false;
       }
       this.recordX = -1;
