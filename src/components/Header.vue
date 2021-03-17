@@ -1,7 +1,6 @@
 <template>
   <div class="header">
     <div
-      @click="pushToHome()"
       class="text-magic"
       data-word="クロネ の Vue Test Backroom"
       data-mobile="クロネ の V.T.B."

@@ -110,11 +110,11 @@
       </filter>
     </defs>
   </svg>
-  <Header class="outer-header" />
+  <Header @click="smartDirect()" class="outer-header" />
   <div
     class="home-outer-content"
     @touchstart="touchStart"
-    @touchmove.prevent
+    @touchmove="touchMove"
     @touchend="touchEnd"
   >
     <Sidebar class="home-side-content" :class="{ mobileside: mobileSideBar }" />
@@ -126,6 +126,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import _ from "lodash";
 
 export default {
   name: "Home",
@@ -139,6 +140,7 @@ export default {
         done: true
       },
       recordX: -1,
+      recordY: -1,
       mobileSideBar: false
     };
   },
@@ -147,6 +149,13 @@ export default {
     Sidebar
   },
   methods: {
+    smartDirect() {
+      if (this.$route.name === "homepage") {
+        this.mobileSideBar = !this.mobileSideBar;
+      } else {
+        this.$router.push("/");
+      }
+    },
     touchStart(event) {
       if (
         event.target.tagName === "INPUT" ||
@@ -158,7 +167,24 @@ export default {
         return;
       }
       this.recordX = event.touches[0].clientX;
+      this.recordY = event.touches[0].clientY;
     },
+    touchMove: _.throttle(
+      function(event) {
+        const xMoving = event.touches[0].pageX;
+        const yMoving = event.touches[0].pageY;
+        //左右滑
+        if (
+          Math.abs(this.recordX - xMoving) > Math.abs(this.recordY - yMoving)
+        ) {
+          if (event.cancelable) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }
+      },
+      150 // time
+    ),
     touchEnd(event) {
       if (this.recordX === -1) {
         return;
@@ -172,6 +198,7 @@ export default {
         this.mobileSideBar = false;
       }
       this.recordX = -1;
+      this.recordY = -1;
     }
   }
 };
@@ -292,6 +319,7 @@ body {
 
 // 不考慮PC600以下的狀況，這邊都當手機版
 // 當前呈現由於PC版同時存在height和min-height，手機板需要兩者覆蓋
+// 可以丟到media，只是還沒時間測試整理
 @media (max-width: 600px) {
   .home-outer-content {
     position: relative;

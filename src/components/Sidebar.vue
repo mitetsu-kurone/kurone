@@ -1,19 +1,42 @@
 <template>
   <div class="sidebar">
-    <router-link class="router home" to="/">Home</router-link>
+    <router-link
+      class="router home"
+      :class="{
+        current: $route.name === 'homepage',
+        mobileanime: mobileAnimating
+      }"
+      to="/"
+      >Home</router-link
+    >
     <router-link
       class="router"
-      :class="{ current: $route.name === 'profile' }"
+      :class="{
+        current: $route.name === 'profile',
+        mobileanime: mobileAnimating
+      }"
       to="/profile"
       >Profile</router-link
     >
     <div class="group" v-for="(group, index) in struct" :key="'group-' + index">
-      <div class="group-title">{{ group.groupName }}</div>
+      <div
+        class="group-title"
+        :class="{
+          mobilegroupanime:
+            group.content.find(val => $route.name === val.routerName) &&
+            mobileAnimating
+        }"
+      >
+        {{ group.groupName }}
+      </div>
       <router-link
         v-for="(item, indexContent) in group.content"
         :key="indexContent"
         class="router"
-        :class="{ current: $route.name === item.routerName }"
+        :class="{
+          current: $route.name === item.routerName,
+          mobileanime: mobileAnimating
+        }"
         :to="item.routerPath"
         >{{ item.displayName }}</router-link
       >
@@ -24,8 +47,19 @@
 <script>
 export default {
   name: "Sidebar",
+  watch: {
+    $route() {
+      clearTimeout(this.timer);
+      this.mobileAnimating = true;
+      this.timer = setTimeout(() => {
+        this.mobileAnimating = false;
+      }, 1000);
+    }
+  },
   data() {
     return {
+      timer: "",
+      mobileAnimating: false,
       struct: [
         {
           groupName: "Mix Trick",
@@ -136,6 +170,52 @@ export default {
 @media (max-width: 600px) {
   .sidebar {
     cursor: default;
+    .router {
+      &:hover {
+        filter: none;
+      }
+      &.current {
+        box-shadow: 0 0 5px cyan inset;
+        text-shadow: 0 0 8px red;
+        color: #5f155f;
+        background: radial-gradient(ellipse at center, #dab3b3, #e99de9);
+        &.mobileanime {
+          filter: url(#glitchextra);
+        }
+      }
+    }
+    .group {
+      &:hover {
+        .group-title {
+          filter: none;
+        }
+      }
+      .group-title {
+        &.mobilegroupanime {
+          filter: url(#glitchextra);
+        }
+      }
+
+      .router {
+        &:hover {
+          box-shadow: 0 0 5px purple inset;
+          text-shadow: 0 0 8px red;
+          filter: none;
+          color: white;
+          text-shadow: 0 0 8px #0400ff;
+          background: linear-gradient(to right, purple 0%, #170f17 100%);
+        }
+        &.current {
+          box-shadow: 0 0 5px cyan inset;
+          color: #5f155f;
+          text-shadow: 0 0 8px red;
+          background: radial-gradient(ellipse at center, #dab3b3, #e99de9);
+          &.mobileanime {
+            filter: url(#glitchextra);
+          }
+        }
+      }
+    }
   }
 }
 </style>
