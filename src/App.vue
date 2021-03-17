@@ -168,6 +168,9 @@ export default {
       }
       this.recordX = event.touches[0].clientX;
       this.recordY = event.touches[0].clientY;
+      if (this.recordX < 100) {
+        event.preventDefault();
+      }
     },
     touchMove: _.throttle(
       function(event) {
