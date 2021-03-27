@@ -1,4 +1,4 @@
-# kurone
+# mitetsu kurone's project
 
 ## Project setup
 ```
@@ -20,5 +20,5 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Online gh-page demo
+[Demo Page](https://mitetsu-kurone.github.io/kurone/#/).

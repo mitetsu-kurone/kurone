@@ -150,6 +150,10 @@ export default {
   },
   methods: {
     smartDirect() {
+      if (this.mobileSideBar) {
+        this.mobileSideBar = false;
+        return;
+      }
       if (this.$route.name === "homepage") {
         this.mobileSideBar = !this.mobileSideBar;
       } else {
@@ -161,22 +165,26 @@ export default {
         event.target.tagName === "INPUT" ||
         this.preventItem[event.target.className]
       ) {
-        return;
-      }
-      if (!this.mobileSideBar && event.touches[0].clientX > 100) {
+        // 維持-1，在這個前提end會直接被排掉
         return;
       }
       this.recordX = event.touches[0].clientX;
       this.recordY = event.touches[0].clientY;
-      if (this.recordX < 100) {
-        event.preventDefault();
-      }
+      // if (this.recordX < 50) {
+      //   event.preventDefault();
+      // }
     },
+    // 無論原生事件有沒有觸發，滑動必觸發
     touchMove: _.throttle(
       function(event) {
+        // 這邊會看到-1，簡單來說會有殘餘滑動
+        if (this.recordX < 100 && event.cancelable) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
         const xMoving = event.touches[0].pageX;
         const yMoving = event.touches[0].pageY;
-        //左右滑
+        //左右滑狀態，把預設event取消
         if (
           Math.abs(this.recordX - xMoving) > Math.abs(this.recordY - yMoving)
         ) {
@@ -221,12 +229,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  width: 1280px;
-  min-height: 750px;
-  height: calc(100vh - 20px);
   overflow-y: auto;
-  margin: 10px auto;
-  border-radius: 5px;
   box-shadow: 0 0 4px #ea00ff;
 }
 
@@ -268,14 +271,8 @@ body {
 }
 .home-outer-content {
   display: flex;
-  height: calc(100vh - 70px);
   .home-side-content {
     width: 280px;
-    min-height: 750px;
-  }
-  .home-inner-content {
-    width: 1000px;
-    min-height: 750px;
   }
 }
 .tran-effect-home-enter-active,
@@ -299,7 +296,25 @@ body {
   }
 }
 
-@media (min-width: 600px) {
+// PC only
+@media (min-width: 601px) {
+  #app {
+    min-height: 750px;
+    height: calc(100vh - 20px);
+    width: 1280px;
+    margin: 10px auto;
+    border-radius: 5px;
+  }
+  .home-outer-content {
+    height: calc(100vh - 70px);
+    .home-side-content {
+      min-height: 750px;
+    }
+    .home-inner-content {
+      width: 1000px;
+      min-height: 750px;
+    }
+  }
   ::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -319,17 +334,14 @@ body {
     background: #8d218d6e;
   }
 }
-
 // 不考慮PC600以下的狀況，這邊都當手機版
-// 當前呈現由於PC版同時存在height和min-height，手機板需要兩者覆蓋
-// 可以丟到media，只是還沒時間測試整理
 @media (max-width: 600px) {
   .home-outer-content {
     position: relative;
-    min-height: calc(100vh - 50px);
+    // min-height: calc(100vh - 50px);
     height: calc(100vh - 50px);
     .home-side-content {
-      min-height: calc(100vh - 50px);
+      // min-height: calc(100vh - 50px);
       height: calc(100vh - 50px);
       position: absolute;
       background: black;
@@ -342,7 +354,7 @@ body {
       }
     }
     .home-inner-content {
-      min-height: calc(100vh - 60px);
+      // min-height: calc(100vh - 60px);
       height: calc(100vh - 60px);
       width: 100%;
     }
@@ -356,8 +368,7 @@ body {
     width: 100%;
     margin: 0;
     height: 100vh;
-    min-height: 100vh;
-    border-radius: 0;
+    // border-radius: 0;
   }
 }
 </style>

@@ -93,6 +93,11 @@ export default {
               displayName: "linkList",
               routerPath: "/effect/linkList",
               routerName: "linkList"
+            },
+            {
+              displayName: "teleport",
+              routerPath: "/effect/teleport",
+              routerName: "teleport"
             }
           ]
         }
@@ -124,19 +129,11 @@ export default {
     &.current {
       box-shadow: 0 0 5px cyan inset;
     }
-    &:hover {
-      box-shadow: 0 0 5px purple inset;
-      text-shadow: 0 0 8px red;
-      filter: url(#glitchhover);
-      color: #5f155f;
-      background: radial-gradient(ellipse at center, #dab3b3, #e99de9);
-    }
   }
   .group {
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 2px #9500ff inset;
-    // border: 1px solid blue;
     .group-title {
       color: #a997a9;
       text-shadow: 1px 1px 3px purple;
@@ -144,25 +141,41 @@ export default {
       box-shadow: 0 0 2px #fcc7fc inset;
       // background: linear-gradient(to right, #3c033c 0%, #b371b3 100%);
     }
-    &:hover {
-      box-shadow: 0 0 2px red inset;
-      .group-title {
-        filter: url(#glitchhover);
-      }
-      // .group-title {
-      //   color: #ffc4ee;
-      //   background: radial-gradient(ellipse at center, purple, #c462c4);
-      // }
-    }
+
     .router {
       &.current {
         box-shadow: 0 0 5px cyan inset;
       }
+    }
+  }
+}
+// 為了不影響手機的hover，直接採用切分
+// 這邊只是粗略地拿600px當分界，比較嚴謹的狀況的話，就必須使用手機偵測函數
+@media (min-width: 601px) {
+  .sidebar {
+    .router {
       &:hover {
-        box-shadow: none;
+        box-shadow: 0 0 5px purple inset;
+        text-shadow: 0 0 8px red;
         filter: url(#glitchhover);
         color: #5f155f;
         background: radial-gradient(ellipse at center, #dab3b3, #e99de9);
+      }
+    }
+    .group {
+      &:hover {
+        box-shadow: 0 0 2px red inset;
+        .group-title {
+          filter: url(#glitchhover);
+        }
+      }
+      .router {
+        &:hover {
+          box-shadow: none;
+          filter: url(#glitchhover);
+          color: #5f155f;
+          background: radial-gradient(ellipse at center, #dab3b3, #e99de9);
+        }
       }
     }
   }
@@ -171,9 +184,6 @@ export default {
   .sidebar {
     cursor: default;
     .router {
-      &:hover {
-        filter: none;
-      }
       &.current {
         box-shadow: 0 0 5px cyan inset;
         text-shadow: 0 0 8px red;
@@ -185,11 +195,6 @@ export default {
       }
     }
     .group {
-      &:hover {
-        .group-title {
-          filter: none;
-        }
-      }
       .group-title {
         &.mobilegroupanime {
           filter: url(#glitchextra);
@@ -197,14 +202,6 @@ export default {
       }
 
       .router {
-        &:hover {
-          box-shadow: 0 0 5px purple inset;
-          text-shadow: 0 0 8px red;
-          filter: none;
-          color: white;
-          text-shadow: 0 0 8px #0400ff;
-          background: linear-gradient(to right, purple 0%, #170f17 100%);
-        }
         &.current {
           box-shadow: 0 0 5px cyan inset;
           color: #5f155f;

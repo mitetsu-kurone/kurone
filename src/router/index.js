@@ -80,6 +80,11 @@ const routes = [
         path: "linkList",
         name: "linkList",
         component: () => import("@/views/Effect/linkList")
+      },
+      {
+        path: "teleport",
+        name: "teleport",
+        component: () => import("@/views/Effect/Teleport")
       }
     ]
   },

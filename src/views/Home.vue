@@ -53,6 +53,10 @@ export default {
       logTitle: "History Note",
       log: [
         {
+          date: "2021-3-28",
+          content: "teleport追加"
+        },
+        {
           date: "2021-3-7",
           content: "randomType, scrollView追加"
         },
