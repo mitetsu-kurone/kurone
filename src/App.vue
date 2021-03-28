@@ -170,9 +170,11 @@ export default {
       }
       this.recordX = event.touches[0].clientX;
       this.recordY = event.touches[0].clientY;
-      // if (this.recordX < 50) {
-      //   event.preventDefault();
-      // }
+      // andriod 應該是start時觸發，故move取消無用
+      // ios未測試(我沒有)
+      if (this.recordX < 50) {
+        event.preventDefault();
+      }
     },
     // 無論原生事件有沒有觸發，滑動必觸發
     touchMove: _.throttle(
@@ -204,9 +206,10 @@ export default {
 
       if (!this.mobileSideBar && diff > 100) {
         this.mobileSideBar = true;
-      }
-      if (this.mobileSideBar && diff < -100) {
+      } else if (this.mobileSideBar && diff < -100) {
         this.mobileSideBar = false;
+      } else {
+        event.target.click();
       }
       this.recordX = -1;
       this.recordY = -1;
