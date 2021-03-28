@@ -22,7 +22,7 @@
       ※注意這裡沒有解決所有適應問題，只解決了部分我感興趣的問題<br />
     </div>
     <div class="demo line1">
-      <div class="info">
+      <div class="hover-info">
         ⓘ
         <div class="hint hint1"></div>
       </div>
@@ -30,21 +30,21 @@
       teleport test line1
     </div>
     <div class="demo line2">
-      <div class="info">
+      <div class="hover-info">
         ⓘ
         <div class="hint hint2"></div>
       </div>
       teleport test line2
     </div>
     <div class="demo line3">
-      <div class="info">
+      <div class="hover-info">
         ⓘ
         <div class="hint hint3"></div>
       </div>
       teleport test line3
     </div>
     <div class="demo line4">
-      <div class="info">
+      <div class="hover-info">
         ⓘ
         <div class="hint hint4"></div>
       </div>
@@ -114,7 +114,7 @@ export default {
   margin-bottom: 35px;
   height: 50px;
   line-height: 50px;
-  .info {
+  .hover-info {
     position: relative;
     margin: 0 10px;
     color: #df7cdf;

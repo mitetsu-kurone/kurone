@@ -126,18 +126,27 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import _ from "lodash";
+// import _ from "lodash";
 
 export default {
   name: "Home",
   data() {
     return {
+      // 為了整合hover，特別設計的黑白名單
+      // key使用易辨別的unique flag，避免和共用混淆
+      // 這是暫時解，有發現更好的方式會再換
+      // 本處touch event有大量測試修改痕跡，且暫時不會結束
+      // 故會有各種註解和痕跡在上面
       preventItem: {
         "list move-mode": true,
         "table-item": true,
         fail: true,
         none: true,
         done: true
+      },
+      passItem: {
+        "top-button": true,
+        "hover-info": true
       },
       recordX: -1,
       recordY: -1,
@@ -160,6 +169,7 @@ export default {
         this.$router.push("/");
       }
     },
+    // touch事件因個人興趣各種測試中
     touchStart(event) {
       if (
         event.target.tagName === "INPUT" ||
@@ -172,32 +182,36 @@ export default {
       this.recordY = event.touches[0].clientY;
       // andriod 應該是start時觸發，故move取消無用
       // ios未測試(我沒有)
-      if (this.recordX < 50) {
+      const checkPass = event.target.className
+        .split(" ")
+        .some(val => this.passItem[val]);
+      if (this.recordX < 50 && !checkPass) {
         event.preventDefault();
+        event.target.click();
       }
     },
-    // 無論原生事件有沒有觸發，滑動必觸發
-    touchMove: _.throttle(
-      function(event) {
-        // 這邊會看到-1，簡單來說會有殘餘滑動
-        if (this.recordX < 100 && event.cancelable) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        const xMoving = event.touches[0].pageX;
-        const yMoving = event.touches[0].pageY;
-        //左右滑狀態，把預設event取消
-        if (
-          Math.abs(this.recordX - xMoving) > Math.abs(this.recordY - yMoving)
-        ) {
-          if (event.cancelable) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-        }
-      },
-      150 // time
-    ),
+    // // 無論原生事件有沒有觸發，滑動必觸發
+    // touchMove: _.throttle(
+    //   function(event) {
+    //     //這邊會看到-1，簡單來說會有殘餘滑動
+    //     if (this.recordX < 100 && event.cancelable) {
+    //       event.preventDefault();
+    //       event.stopPropagation();
+    //     }
+    //     const xMoving = event.touches[0].pageX;
+    //     const yMoving = event.touches[0].pageY;
+    //     //左右滑狀態，把預設event取消
+    //     if (
+    //       Math.abs(this.recordX - xMoving) > Math.abs(this.recordY - yMoving)
+    //     ) {
+    //       if (event.cancelable) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //       }
+    //     }
+    //   },
+    //   150 // time
+    // ),
     touchEnd(event) {
       if (this.recordX === -1) {
         return;
@@ -208,8 +222,6 @@ export default {
         this.mobileSideBar = true;
       } else if (this.mobileSideBar && diff < -100) {
         this.mobileSideBar = false;
-      } else {
-        event.target.click();
       }
       this.recordX = -1;
       this.recordY = -1;
